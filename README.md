@@ -134,3 +134,45 @@ La meta del Laboratorio 1 no es terminar con código más limpio.
 La meta es terminar con evidencia suficiente para responder:
 
 > **¿Qué hace el código, dónde están sus riesgos y qué pruebas necesito antes de cambiarlo?**
+
+## Instrucciones de Compilación, Ejecución y Pruebas
+
+### 1. Compilación
+Para limpiar el directorio de trabajo y compilar el código fuente del proyecto:
+
+```bash
+mvn clean compile
+```
+
+### 2. Ejecución de la Aplicación Principal
+Para ejecutar la clase principal (`Main.java`) mediante el plugin de Maven:
+
+```bash
+mvn exec:java -Dexec.mainClass="edu.uees.refactor.app.Main"
+```
+
+**Salida esperada:**
+```text
+Guardando reserva R-001
+Correo enviado a ana@uees.edu.ec
+Estado: CONFIRMADA
+Total: 34.0
+```
+
+### 3. Ejecución de Pruebas Unitarias
+Para ejecutar las pruebas automáticas y validar la red de seguridad del código:
+
+* **Ejecutar toda la suite de pruebas:**
+  ```bash
+  mvn test
+  ```
+
+* **Ejecutar una clase de prueba específica:**
+  ```bash
+  mvn test -Dtest=ServicioReservasTest
+  ```
+
+* **Ejecutar un test específico:**
+  ```bash
+  mvn test -Dtest=ServicioReservasTest#anticipacionValidaProcesaCorrectamente
+  ```
