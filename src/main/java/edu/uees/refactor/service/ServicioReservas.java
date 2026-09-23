@@ -1,5 +1,6 @@
 package edu.uees.refactor.service;
 
+import edu.uees.refactor.domain.Correo;
 import edu.uees.refactor.domain.Reserva;
 import edu.uees.refactor.repository.ReservaRepository;
 
@@ -44,7 +45,12 @@ public class ServicioReservas {
 
     private boolean esInvalida(Reserva r, int horasAnticipacion) {
         if (r == null) return true;
-        if (r.getCorreo() == null || !r.getCorreo().contains("@")) return true;
+
+        Correo correo = new Correo(r.getCorreo());
+        if (!correo.esValido()) {
+            return true;
+        }
+
         if (r.getInicio() == null || r.getFin() == null || !r.getFin().isAfter(r.getInicio())) return true;
         return horasAnticipacion < 2;
     }
