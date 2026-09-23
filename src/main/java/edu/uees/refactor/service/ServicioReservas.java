@@ -15,30 +15,11 @@ public class ServicioReservas {
             Reserva r,
             int horasAnticipacion) {
 
-        if (r == null) {
+        if (esInvalida(r, horasAnticipacion)) {
             return 0;
         }
 
-        if (r.getCorreo() == null
-                || !r.getCorreo().contains("@")) {
-            return 0;
-        }
-
-        if (r.getInicio() == null
-                || r.getFin() == null
-                || !r.getFin().isAfter(r.getInicio())) {
-            return 0;
-        }
-
-        if (horasAnticipacion < 2) {
-            return 0;
-        }
-
-        double total = 40;
-
-        if ("VIP".equals(r.getTipo())) {
-            total = total * 0.85;
-        }
+        double total = calcularTotal(r);
 
         System.out.println(
                 "Guardando reserva " + r.getId()
@@ -52,4 +33,22 @@ public class ServicioReservas {
 
         return total;
     }
+
+    private boolean esInvalida(Reserva r, int horasAnticipacion) {
+        if (r == null) return true;
+        if (r.getCorreo() == null || !r.getCorreo().contains("@")) return true;
+        if (r.getInicio() == null || r.getFin() == null || !r.getFin().isAfter(r.getInicio())) return true;
+        return horasAnticipacion < 2;
+    }
+    
+    private double calcularTotal(Reserva r) {
+        double total = 40;
+
+        if ("VIP".equals(r.getTipo())) {
+            return total * 0.85;
+        }
+
+        return total;
+    }
+
 }
