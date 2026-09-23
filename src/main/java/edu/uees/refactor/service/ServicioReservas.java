@@ -1,6 +1,7 @@
 package edu.uees.refactor.service;
 
 import edu.uees.refactor.domain.Reserva;
+import edu.uees.refactor.repository.ReservaRepository;
 
 /**
  * Código heredado intencional para el Laboratorio 1.
@@ -10,6 +11,18 @@ import edu.uees.refactor.domain.Reserva;
  * el diagnóstico y el plan de refactorización.
  */
 public class ServicioReservas {
+
+    private final ReservaRepository repository;
+    private final NotificadorReserva notificador;
+
+    public ServicioReservas(ReservaRepository repository, NotificadorReserva notificador) {
+        this.repository = repository;
+        this.notificador = notificador;
+    }
+
+    public ServicioReservas() {
+        this(new ReservaRepository(), new NotificadorReserva());
+    }
 
     public double procesar(
             Reserva r,
@@ -21,13 +34,8 @@ public class ServicioReservas {
 
         double total = calcularTotal(r);
 
-        System.out.println(
-                "Guardando reserva " + r.getId()
-        );
-
-        System.out.println(
-                "Correo enviado a " + r.getCorreo()
-        );
+        repository.guardar(r.getId());
+        notificador.notificar(r.getCorreo());
 
         r.confirmar();
 
